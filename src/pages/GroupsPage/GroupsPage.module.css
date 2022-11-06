@@ -1,0 +1,11 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.studentsAmount {
+    font-family: "Montserrat Medium", sans-serif;
+    margin: 0 0 40px 0;
+    font-size: 18px;
+}

@@ -1,0 +1,44 @@
+.wrapper {
+    background: #1f1f1f;
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /*min-width: 200px;*/
+    flex-grow: 1;
+}
+
+.wrapper > input {
+    background: transparent;
+    border: none;
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: white;
+    font-size: 16px;
+    margin: 5px 0;
+    width: 100%;
+    min-width: 50px;
+}
+
+.wrapper > select {
+    background: #1F1F1F;
+    border: none;
+    font-family: "Montserrat SemiBold", sans-serif;
+    color: white;
+    font-size: 16px;
+    margin: 5px 0;
+    width: 100%;
+    min-width: 50px;
+}
+
+.title {
+    color: #f7d558;
+    font-family: "Montserrat SemiBold", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: .5px;
+    line-height: 17px;
+    margin: 0;
+    white-space: nowrap;
+}

@@ -1,0 +1,26 @@
+.filtersContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.filtersRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.btnRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    /*width: 40%;*/
+}
+

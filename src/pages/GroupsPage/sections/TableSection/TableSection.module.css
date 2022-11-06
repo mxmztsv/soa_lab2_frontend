@@ -1,0 +1,24 @@
+.section {
+    margin: 50px 0;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.count {
+    color: white;
+    font-family: "Montserrat SemiBold", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: .5px;
+    line-height: 24px;
+    margin: 0;
+    white-space: nowrap;
+}

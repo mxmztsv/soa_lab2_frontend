@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat Regular', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #1F1F1F;
+  color: white;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  text-decoration: none;
+}
+
+.title {
+  font-family: 'Lexend Deca Bold', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 65px;
+  margin: 30px 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #F7D558;
+}
+
+.yellow {
+  color: #F7D558;
+}
+
+button {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn_filled {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 40px;
+  background: #F7D558;
+  border-radius: 20px;
+  border: 1px solid transparent;
+
+  font-family: 'Montserrat SemiBold', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 32px;
+  letter-spacing: 1px;
+  /* identical to box height, or 229% */
+  text-transform: uppercase;
+  transition: 0.3s;
+  color: #414141;
+}
+
+.btn_filled:hover:enabled {
+  transition: 0.3s;
+  background: transparent;
+  color: #F7D558;
+  border: 1px solid #F7D558;
+}
+
+.btn_outlined {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 40px;
+  border-radius: 20px;
+
+  transition: 0.3s;
+  background: transparent;
+  color: #F7D558;
+  border: 1px solid #F7D558;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 32px;
+  letter-spacing: 1px;
+  /* identical to box height, or 229% */
+  text-transform: uppercase;
+}
+
+.btn_outlined:hover:enabled {
+  transition: 0.3s;
+  background: #F7D558;
+  border: 1px solid transparent;
+  color: #414141;
+}
+
+.btn_filled:disabled,
+.btn_filled[disabled] {
+  background: rgba(168, 158, 111, 0.6);
+  cursor: not-allowed;
+}
+
+.btn_outlined:disabled,
+.btn_outlined[disabled] {
+  background: rgba(168, 158, 111, 0.6);
+  cursor: not-allowed;
+  border: 1px solid transparent;
+  color: #414141;
+}
+
+@font-face {
+  font-family: 'Montserrat Medium';
+  src: url('./assets/fonts/Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat Regular';
+  src: url('./assets/fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat Light';
+  src: url('./assets/fonts/Montserrat-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat Bold';
+  src: url('./assets/fonts/Montserrat-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat SemiBold';
+  src: url('./assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend Deca Bold';
+  src: url('./assets/fonts/LexendDeca-Bold.ttf') format('truetype');
+}
