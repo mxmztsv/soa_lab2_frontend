@@ -1,21 +1,20 @@
-import styles from './AddStudentPage.module.css'
+import styles from './AddStudentModal.module.css'
 import {useForm} from "react-hook-form";
-import {Layout} from "../../components/Layout/Layout";
 import {Card} from "../../components/Card/Card";
 import {InputWrapper} from "../../components/Input/InputWrapper";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 
-export const AddStudentPage = () => {
+export const AddStudentModal = ({ close, groupId }) => {
 
-	const navigate = useNavigate()
-	const { register, handleSubmit, formState: { errors } } = useForm()
+	// const navigate = useNavigate()
+	const {register, handleSubmit, formState: {errors}} = useForm()
 	const onSubmit = data => console.log(data)
 
 	return (
-		<Layout>
-			<div className={styles.page}>
-				<h1 className="title">Добавление студента</h1>
-				<Card title="Данные">
+		<>
+			<div className={styles.bg} onClick={close}/>
+			<div className={styles.modal}>
+				<Card title="Добавление студента">
 					<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 						<InputWrapper title="Имя">
 							<input
@@ -70,11 +69,13 @@ export const AddStudentPage = () => {
 						</InputWrapper>
 						<div className={styles.btnRow}>
 							<button className="btn_filled" type="submit">Сохранить</button>
-							<button className="btn_outlined" type="button" onClick={() => {navigate(-1)}}>Отмена</button>
+							{/*<button className="btn_outlined" type="button" onClick={() => {navigate(-1)}}>Отмена</button>*/}
+							<button className="btn_outlined" type="button" onClick={close}>Отмена
+							</button>
 						</div>
 					</form>
 				</Card>
 			</div>
-		</Layout>
+		</>
 	)
 }

@@ -1,9 +1,6 @@
 import styles from './GroupsTable.module.css'
-import {useNavigate} from "react-router-dom";
 
-export const GroupsTable = ({ groups = [] }) => {
-
-	const navigate = useNavigate()
+export const GroupsTable = ({ groups = [], editObject = () => {} }) => {
 
 	return (
 		<table>
@@ -26,7 +23,7 @@ export const GroupsTable = ({ groups = [] }) => {
 			{
 				groups.map((group, index) => {
 					return (
-						<tr key={index} onClick={() => {navigate(`/edit-group/${group.id._text}`)}}>
+						<tr key={index} onClick={() => {editObject(group.id._text)}}>
 							<td>{group.id._text}</td>
 							<td>{group.name._text}</td>
 							<td>{group.coordinates.x._text}</td>

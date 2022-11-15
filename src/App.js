@@ -1,25 +1,17 @@
-import {Layout} from "./components/Layout/Layout";
-import {useRoutes} from "./routes";
-import {BrowserRouter as Router} from "react-router-dom";
 import {Toaster} from "react-hot-toast";
+import {GroupsPage} from "./pages/GroupsPage/GroupsPage";
 
 function App() {
 
-    const routes = useRoutes()
-
-    return (
-        <div className="App">
-            <Toaster
-                position="top-right"
-                reverseOrder={false}
-            />
-            <Router>
-                <div>
-                    {routes}
-                </div>
-            </Router>
-        </div>
-    )
+	return (
+		<div className="App">
+			<Toaster
+				position="top-right"
+				reverseOrder={false}
+			/>
+			<GroupsPage/>
+		</div>
+	)
 }
 
 export default App

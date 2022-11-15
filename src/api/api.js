@@ -24,8 +24,8 @@ export const getStudyGroups = async (data) => {
 	const responseXML = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
 \t<StudyGroupDto>
-\t\t<id>1234</id>
-\t\t<name>P34101</name>
+\t\t<id>1232</id>
+\t\t<name>P34111</name>
 \t\t<coordinates>
 \t\t\t<x>12</x>
 \t\t\t<y>34</y>
@@ -36,7 +36,7 @@ export const getStudyGroups = async (data) => {
 \t\t<transferredStudents>1</transferredStudents>
 \t\t<semesterEnum>THIRD</semesterEnum>
 \t\t<groupAdmin>
-\t\t\t<name>Зайцев Максим</name>
+\t\t\t<name>Ильинская Ольга</name>
 \t\t\t<height>185</height>
 \t\t\t<weight>92</weight>
 \t\t\t<passportID>1234 123456</passportID>

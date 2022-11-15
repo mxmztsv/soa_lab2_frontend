@@ -3,7 +3,7 @@ import {Layout} from "../../components/Layout/Layout";
 import {Card} from "../../components/Card/Card";
 import {useForm} from "react-hook-form";
 import {InputWrapper} from "../../components/Input/InputWrapper";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {addGroup, getStudentsByGroupId, getStudyGroupById, saveGroup} from "../../api/api";
 
@@ -13,7 +13,7 @@ export const EditGroupPage = () => {
 	const [students, setStudents] = useState([])
 
 	const params = useParams()
-	const navigate = useNavigate()
+	// const navigate = useNavigate()
 
 	const { register, handleSubmit, formState: { errors }, setValue } = useForm()
 
@@ -144,7 +144,8 @@ export const EditGroupPage = () => {
 							{
 								groupId && <>
 									<button className="btn_outlined" type="button">Удалить</button>
-									<button className="btn_outlined" type="button" onClick={() => {navigate(`/edit-group/${groupId}/add-student`)}}>Добавить студента</button>
+									{/*<button className="btn_outlined" type="button" onClick={() => {navigate(`/edit-group/${groupId}/add-student`)}}>Добавить студента</button>*/}
+									<button className="btn_outlined" type="button" onClick={() => {}}>Добавить студента</button>
 									<button className="btn_outlined" type="button">Отчислить всех</button>
 								</>
 							}
