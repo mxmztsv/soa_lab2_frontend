@@ -34,7 +34,7 @@ export const EditModal = ({ close, id = null }) => {
 
 	const onSubmit = async (data) => {
 		let dto = {
-			Vehicle: {
+			StudyGroupDTO: {
 				...data,
 				coordinates: {
 					x: data.x,
@@ -42,8 +42,8 @@ export const EditModal = ({ close, id = null }) => {
 				}
 			}
 		}
-		delete dto.Vehicle.x
-		delete dto.Vehicle.y
+		delete dto.StudyGroupDTO.x
+		delete dto.StudyGroupDTO.y
 		if (id) {
 			const response = await saveGroup(dto)
 		} else {
@@ -63,8 +63,8 @@ export const EditModal = ({ close, id = null }) => {
 					setValue("y", groupData.coordinates.y._text)
 					setValue("shouldBeExpelled", groupData.shouldBeExpelled._text)
 					setValue("transferredStudents", groupData.transferredStudents._text)
-					setValue("semester", groupData.semesterEnum._text)
-					setValue("group_admin_name", groupData.groupAdmin.passportID._text)
+					setValue("semesterEnum", groupData.semesterEnum._text)
+					setValue("groupAdmin", groupData.groupAdmin.passportID._text)
 				})
 			})
 		} else {
@@ -113,6 +113,16 @@ export const EditModal = ({ close, id = null }) => {
 										{...register('y')}
 									/>
 								</InputWrapper>
+								<InputWrapper title="Кол-во студентов">
+									<input
+										type="text"
+										className={styles.input}
+										placeholder="Количество студентов"
+										{...register('studentsCount')}
+									/>
+								</InputWrapper>
+							</div>
+							<div className={styles.formColumn}>
 								<InputWrapper title="К отчислению">
 									<input
 										type="text"
@@ -121,8 +131,6 @@ export const EditModal = ({ close, id = null }) => {
 										{...register('shouldBeExpelled')}
 									/>
 								</InputWrapper>
-							</div>
-							<div className={styles.formColumn}>
 								<InputWrapper title="Переведенных">
 									<input
 										type="text"
@@ -132,7 +140,7 @@ export const EditModal = ({ close, id = null }) => {
 									/>
 								</InputWrapper>
 								<InputWrapper title="Семестр">
-									<select {...register('semester')}>
+									<select {...register('semesterEnum')}>
 										<option value="">
 											-
 										</option>
@@ -148,7 +156,7 @@ export const EditModal = ({ close, id = null }) => {
 									</select>
 								</InputWrapper>
 								<InputWrapper title="Админ группы">
-									<select {...register('group_admin_name')}>
+									<select {...register('groupAdmin')}>
 										<option value="">
 											-
 										</option>

@@ -1,4 +1,6 @@
 import {parseXML, toXML} from "../utils/xmlParser";
+import {request} from "./request";
+import toast from "react-hot-toast";
 
 export const getStudyGroups = async (data) => {
 
@@ -24,7 +26,7 @@ export const getStudyGroups = async (data) => {
 	const responseXML = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
 \t<StudyGroupDto>
-\t\t<id>1232</id>
+\t\t<id>1</id>
 \t\t<name>P34111</name>
 \t\t<coordinates>
 \t\t\t<x>12</x>
@@ -44,7 +46,7 @@ export const getStudyGroups = async (data) => {
 \t\t</groupAdmin>
 \t</StudyGroupDto>
 \t<StudyGroupDto>
-\t\t<id>1234</id>
+\t\t<id>2</id>
 \t\t<name>P34101</name>
 \t\t<coordinates>
 \t\t\t<x>12</x>
@@ -77,23 +79,6 @@ export const getStudyGroupById = async (id) => {
 
 	console.log('group id', id)
 
-	const response = [
-		{
-			'id': 123,
-			'name': 'P34101',
-			'coordinates': {
-				'x': 12,
-				'y': 34
-			},
-			'creationDate': '1045-52-93T00:00:56Z',
-			'studentsCount': 32,
-			'shouldBeExpelled': 2,
-			'transferredStudents': 1,
-			'semesterEnum': 'THIRD',
-			'groupAdmin': 'Ольга'
-		}
-	]
-
 	const responseXML = `<?xml version="1.0" encoding="UTF-8"?>
 <StudyGroupDto>
 \t<id>1234</id>
@@ -116,14 +101,10 @@ export const getStudyGroupById = async (id) => {
 \t</groupAdmin>
 </StudyGroupDto>`
 
-	const responseJSON = parseXML(responseXML)
-
-	// console.log(parseXML(responseXML))
-
-	console.log(responseJSON.StudyGroupDto)
+	const response = await request(`/study-groups/${id}`)
 
 	// return response
-	return responseJSON.StudyGroupDto
+	return response.StudyGroupDTO
 }
 
 export const getStudentsByGroupId = async (id) => {
@@ -159,8 +140,11 @@ export const getStudentsByGroupId = async (id) => {
 	return responseJSON.Response.PersonDto
 }
 
-export const addGroup = (data) => {
-	console.log(data)
+export const addGroup = async (data) => {
+	console.log(toXML(data))
+	const response = await request('/study-groups', 'POST', data)
+	toast.success(`Группа ${response.StudyGroupDTO.name._text} добавлена`)
+	console.log('addGroupresponse', response)
 }
 
 export const saveGroup = (data) => {
