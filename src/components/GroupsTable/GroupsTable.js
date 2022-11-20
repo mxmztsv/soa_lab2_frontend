@@ -1,4 +1,5 @@
 import styles from './GroupsTable.module.css'
+import {parseDate} from "../../utils/dateParser";
 
 export const GroupsTable = ({ groups = [], editObject = () => {} }) => {
 
@@ -28,12 +29,12 @@ export const GroupsTable = ({ groups = [], editObject = () => {} }) => {
 							<td>{group.name._text}</td>
 							<td>{group.coordinates.x._text}</td>
 							<td>{group.coordinates.y._text}</td>
-							<td>{group.creationDate._text}</td>
+							<td>{parseDate(group.creationDate._text)}</td>
 							<td>{group.studentsCount._text}</td>
 							<td>{group.shouldBeExpelled._text}</td>
 							<td>{group.transferredStudents._text}</td>
 							<td>{group.semesterEnum._text}</td>
-							<td>{group.groupAdmin.name._text}</td>
+							<td>{group.groupAdmin.name === undefined ? "-" : group.groupAdmin.name._text}</td>
 						</tr>
 					)
 				})

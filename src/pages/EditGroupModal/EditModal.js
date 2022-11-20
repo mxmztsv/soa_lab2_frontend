@@ -12,12 +12,12 @@ import {
 	saveGroup,
 	addVehicle,
 	saveVehicle,
-	getStudyGroupById
+	getStudyGroupById, deleteGroup, expelAllStudentsFromGroup
 } from "../../api/api";
 import {toXML} from "../../utils/xmlParser";
 import {AddStudentModal} from "../AddStudentModal/AddStudentModal";
 
-export const EditModal = ({ close, id = null }) => {
+export const EditModal = ({ close, id = null, updateGroups }) => {
 
 	const [students, setStudents] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -28,6 +28,19 @@ export const EditModal = ({ close, id = null }) => {
 
 	const closeModal = () => {
 		setIsModalOpen(false)
+	}
+
+	const deleteHandler = () => {
+		deleteGroup(id).then(() => {
+			updateGroups()
+			close()
+		})
+	}
+
+	const expelAllHandler = () => {
+		expelAllStudentsFromGroup(id).then(() => {
+			getData()
+		})
 	}
 
 	const { register, handleSubmit, formState: { errors }, setValue } = useForm()
@@ -45,9 +58,15 @@ export const EditModal = ({ close, id = null }) => {
 		delete dto.StudyGroupDTO.x
 		delete dto.StudyGroupDTO.y
 		if (id) {
-			const response = await saveGroup(dto)
+			saveGroup(id, dto).then(() => {
+				updateGroups()
+				close()
+			})
 		} else {
-			const response = await addGroup(dto)
+			addGroup(dto).then(() => {
+				updateGroups()
+				close()
+			})
 		}
 	}
 
@@ -61,10 +80,13 @@ export const EditModal = ({ close, id = null }) => {
 					// setValue("creationDate", groupData.creationDate._text)
 					setValue("x", groupData.coordinates.x._text)
 					setValue("y", groupData.coordinates.y._text)
+					setValue("studentsCount", groupData.studentsCount._text)
 					setValue("shouldBeExpelled", groupData.shouldBeExpelled._text)
 					setValue("transferredStudents", groupData.transferredStudents._text)
 					setValue("semesterEnum", groupData.semesterEnum._text)
-					setValue("groupAdmin", groupData.groupAdmin.passportID._text)
+					if (groupData.groupAdmin.id !== undefined) {
+						setValue("groupAdminId", groupData.groupAdmin.id._text)
+					}
 				})
 			})
 		} else {
@@ -156,14 +178,14 @@ export const EditModal = ({ close, id = null }) => {
 									</select>
 								</InputWrapper>
 								<InputWrapper title="Админ группы">
-									<select {...register('groupAdmin')}>
-										<option value="">
+									<select {...register('groupAdminId')}>
+										<option value="null">
 											-
 										</option>
 										{
 											students.map((student, index) => {
 												return (
-													<option value={student.passportID._text} key={index}>
+													<option value={student.id._text} key={index}>
 														{student.name._text}
 													</option>
 												)
@@ -176,7 +198,7 @@ export const EditModal = ({ close, id = null }) => {
 						{
 							id && <div className={styles.btnRow}>
 								<button className="btn_outlined" type="button" onClick={openModal}>Добавить студента</button>
-								<button className="btn_outlined" type="button">Отчислить всех</button>
+								<button className="btn_outlined" type="button" onClick={expelAllHandler}>Отчислить всех</button>
 							</div>
 						}
 						<div className={styles.btnRow}>
@@ -184,7 +206,7 @@ export const EditModal = ({ close, id = null }) => {
 							<button className="btn_outlined" type="button" onClick={close}>Отмена</button>
 							{
 								id && <>
-									<button className="btn_outlined" type="button">Удалить</button>
+									<button className="btn_outlined" type="button" onClick={deleteHandler}>Удалить</button>
 								</>
 							}
 

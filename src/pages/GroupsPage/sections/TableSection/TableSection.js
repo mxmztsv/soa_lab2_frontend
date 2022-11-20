@@ -6,7 +6,7 @@ import {Pagination} from "../../../../components/Pagination/Pagination";
 import {useState} from "react";
 import {EditModal} from "../../../EditGroupModal/EditModal";
 
-export const TableSection = ({groups, nextPage, prevPage, page, limit, setLimit}) => {
+export const TableSection = ({groups, nextPage, prevPage, page, limit, setLimit, updateGroups}) => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [selectedObjectId, setSelectedObjectId] = useState(null)
@@ -27,7 +27,7 @@ export const TableSection = ({groups, nextPage, prevPage, page, limit, setLimit}
 
 	return (
 		<section className={styles.section}>
-			{ isModalOpen && <EditModal close={closeModal} id={selectedObjectId}/> }
+			{ isModalOpen && <EditModal close={closeModal} id={selectedObjectId} updateGroups={updateGroups}/> }
 			<Card title="Список групп">
 				<div className={styles.header}>
 					<Pagination onPrev={prevPage} onNext={nextPage} onChangeLimit={setLimit} actualPageNum={page}

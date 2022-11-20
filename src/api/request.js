@@ -1,7 +1,7 @@
-import {BASE_API_URL} from "../config";
+import {BASE_API_URL, ISU_BASE_API_URL} from "../config";
 import {parseXML, toXML} from "../utils/xmlParser";
 
-export const request = async (url, method = 'GET', body = null) => {
+export const request = async (url, method = 'GET', body = null, isu = false) => {
 	let response
 	// console.log('request body', body)
 	let options = {
@@ -16,23 +16,11 @@ export const request = async (url, method = 'GET', body = null) => {
 		const stringBody = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>${toXML(body).toString()}`
 		// console.log('string body', stringBody)
 		console.log('body', toXML(body))
-		const plug = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<Vehicle>\n" +
-			"   <name>Name23</name>\n" +
-			"   <coordinates>\n" +
-			"       <x>1.1</x>\n" +
-			"       <y>4</y>\n" +
-			"   </coordinates>\n" +
-			"   <enginePower>80</enginePower>\n" +
-			"   <numberOfWheels>4</numberOfWheels>\n" +
-			"   <distanceTravelled>4444.1</distanceTravelled>\n" +
-			"   <type>CAR</type>\n" +
-			"</Vehicle>"
 		options.body = toXML(body)
 	}
 
 	try {
-		response = await fetch(`${BASE_API_URL}${url}`, options)
+		response = await fetch(`${isu ? ISU_BASE_API_URL : BASE_API_URL}${url}`, options)
 
 		// console.log('request response', await response.text())
 

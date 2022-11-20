@@ -6,104 +6,31 @@ export const getStudyGroups = async (data) => {
 
 	console.log(data)
 
-	const response = [
-		{
-			'id': 123,
-			'name': 'P34101',
-			'coordinates': {
-				'x': 12,
-				'y': 34
-			},
-			'creationDate': '1045-52-93T00:00:56Z',
-			'studentsCount': 32,
-			'shouldBeExpelled': 2,
-			'transferredStudents': 1,
-			'semesterEnum': 'THIRD',
-			'groupAdmin': 'Ольга'
+	let url = `/study-groups?page=${data.page}&limit=${data.limit}&sort_by=${data.sort_by}&order=${data.order}`
+
+	for (let key in data) {
+		if (data[key] !== "") {
+			if (key !== 'sort_by' && key !== 'order' && key !== 'page' && key !== 'limit') {
+				url = url + `&${key}=${data[key]}`
+			}
 		}
-	]
+	}
 
-	const responseXML = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-\t<StudyGroupDto>
-\t\t<id>1</id>
-\t\t<name>P34111</name>
-\t\t<coordinates>
-\t\t\t<x>12</x>
-\t\t\t<y>34</y>
-\t\t</coordinates>
-\t\t<creationDate>1045-52-93T00:00:56Z</creationDate>
-\t\t<studentsCount>32</studentsCount>
-\t\t<shouldBeExpelled>2</shouldBeExpelled>
-\t\t<transferredStudents>1</transferredStudents>
-\t\t<semesterEnum>THIRD</semesterEnum>
-\t\t<groupAdmin>
-\t\t\t<name>Ильинская Ольга</name>
-\t\t\t<height>185</height>
-\t\t\t<weight>92</weight>
-\t\t\t<passportID>1234 123456</passportID>
-\t\t\t<nationality>RUSSIA</nationality>
-\t\t</groupAdmin>
-\t</StudyGroupDto>
-\t<StudyGroupDto>
-\t\t<id>2</id>
-\t\t<name>P34101</name>
-\t\t<coordinates>
-\t\t\t<x>12</x>
-\t\t\t<y>34</y>
-\t\t</coordinates>
-\t\t<creationDate>1045-52-93T00:00:56Z</creationDate>
-\t\t<studentsCount>32</studentsCount>
-\t\t<shouldBeExpelled>2</shouldBeExpelled>
-\t\t<transferredStudents>1</transferredStudents>
-\t\t<semesterEnum>THIRD</semesterEnum>
-\t\t<groupAdmin>
-\t\t\t<name>Зайцев Максим</name>
-\t\t\t<height>185</height>
-\t\t\t<weight>92</weight>
-\t\t\t<passportID>1234 123456</passportID>
-\t\t\t<nationality>RUSSIA</nationality>
-\t\t</groupAdmin>
-\t</StudyGroupDto>
-</Response>`
+	console.log('url', url)
 
-	const responseJSON = parseXML(responseXML)
+	const response = await request(url)
 
-	// console.log(responseJSON.Response.StudyGroupDto)
-
-	// return response
-	return responseJSON.Response.StudyGroupDto
+	if (response.ListOfStudyGroups.StudyGroupDTO === undefined) {
+		return []
+	} else if (response.ListOfStudyGroups.StudyGroupDTO.length !== undefined) {
+		return response.ListOfStudyGroups.StudyGroupDTO
+	} else {
+		return [response.ListOfStudyGroups.StudyGroupDTO]
+	}
 }
 
 export const getStudyGroupById = async (id) => {
-
-	console.log('group id', id)
-
-	const responseXML = `<?xml version="1.0" encoding="UTF-8"?>
-<StudyGroupDto>
-\t<id>1234</id>
-\t<name>P34101</name>
-\t<coordinates>
-\t\t<x>12</x>
-\t\t<y>34</y>
-\t</coordinates>
-\t<creationDate>2022-05-05</creationDate>
-\t<studentsCount>32</studentsCount>
-\t<shouldBeExpelled>2</shouldBeExpelled>
-\t<transferredStudents>1</transferredStudents>
-\t<semesterEnum>EIGHTH</semesterEnum>
-\t<groupAdmin>
-\t\t\t<name>Ильинская Ольга</name>
-\t\t\t<height>185</height>
-\t\t\t<weight>92</weight>
-\t\t\t<passportID>1234 654321</passportID>
-\t\t\t<nationality>RUSSIA</nationality>
-\t</groupAdmin>
-</StudyGroupDto>`
-
 	const response = await request(`/study-groups/${id}`)
-
-	// return response
 	return response.StudyGroupDTO
 }
 
@@ -134,24 +61,90 @@ export const getStudentsByGroupId = async (id) => {
 \t</PersonDto>
 </Response>`
 
-	const responseJSON = parseXML(responseXML)
-	console.log(responseJSON.Response.PersonDto)
+	// const responseJSON = parseXML(responseXML)
+	// console.log(responseJSON.Response.PersonDto)
 
-	return responseJSON.Response.PersonDto
+	const response = await request(`/group/${id}/students`, "GET", null, true)
+
+	console.log('students by group id', response.ListOfPersons)
+
+	// return response.ListOfPersons.PersonDTO
+
+	if (response.ListOfPersons.PersonDTO === undefined) {
+		return []
+	} else if (response.ListOfPersons.PersonDTO.length !== undefined) {
+		return response.ListOfPersons.PersonDTO
+	} else {
+		return [response.ListOfPersons.PersonDTO]
+	}
 }
 
 export const addGroup = async (data) => {
 	console.log(toXML(data))
-	const response = await request('/study-groups', 'POST', data)
-	toast.success(`Группа ${response.StudyGroupDTO.name._text} добавлена`)
-	console.log('addGroupresponse', response)
+	request('/study-groups', 'POST', data).then((response) => {
+		toast.success(`Группа ${response.StudyGroupDTO.name._text} добавлена`)
+		return response
+	}).catch((e) => {
+		toast.error(e.message)
+	})
+
 }
 
-export const saveGroup = (data) => {
-	console.log(data)
+export const saveGroup = (id, data) => {
+	console.log(toXML(data))
+	request(`/study-groups/${id}`, 'PATCH', data).then((response) => {
+		toast.success(`Группа ${response.StudyGroupDTO.name._text} обновлена`)
+		return response
+	}).catch((e) => {
+		toast.error(e.message)
+	})
 }
 
-export const getStudentsAmount = () => {
-	return 12
+export const deleteGroup = async (id) => {
+	request(`/study-groups/${id}`, 'DELETE').then((response) => {
+		toast.success(`Группа удалена`)
+		return response
+	}).catch((e) => {
+		toast.error(e.message)
+	})
 }
+
+export const addStudentToGroup = (id, data) => {
+	console.log('new student', toXML(data))
+	request(`/group/${id}/add-student`, 'POST', data, true).then((response) => {
+		toast.success(`Студент ${response.PersonDTO.name._text} добавлен`)
+	}).catch((e) => {
+		toast.error(e.message)
+	})
+}
+
+export const expelAllStudentsFromGroup = (id) => {
+	request(`/group/${id}/expel-all`, 'POST', null, true).then((response) => {
+		toast.success(`Все студенты группы отчислены`)
+	}).catch((e) => {
+		toast.error(e.message)
+	})
+}
+
+export const getStudentsAmount = async () => {
+	const response = await request('/study-groups/students/amount')
+	return response.sumStudentCount._text
+}
+
+export const countEqualsBySize = async (studentsAmount) => {
+	const response = await request(`/study-groups/count-equals-by-size/${studentsAmount}`)
+	return response.Response
+}
+
+export const countMoreTransferredStudents = async (transferredStudents) => {
+	const response = await request(`/study-groups/count-with-more-transferred-students-than/${transferredStudents}`)
+	console.log('countMoreTransferredStudents', response)
+	if (response.Response === undefined) {
+		return response
+	} else {
+		return response.Response
+	}
+}
+
+
 

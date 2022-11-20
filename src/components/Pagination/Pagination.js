@@ -4,7 +4,7 @@ import {InputWrapper} from "../Input/InputWrapper";
 export const Pagination = ({ onPrev = () => {},
 	                           onNext = () => {},
 	                           actualPageNum = 1,
-								limit = 5,
+								limit = 3,
 	                           onChangeLimit = () => {}
 }) => {
 
@@ -21,14 +21,17 @@ export const Pagination = ({ onPrev = () => {},
 			<div className={styles.limit}>
 				<InputWrapper title="Элементов на странице">
 					<select value={limit} onChange={limitHandler}>
+						<option value="1">
+							1
+						</option>
+						<option value="3">
+							3
+						</option>
 						<option value="5">
 							5
 						</option>
 						<option value="10">
 							10
-						</option>
-						<option value="15">
-							15
 						</option>
 					</select>
 				</InputWrapper>

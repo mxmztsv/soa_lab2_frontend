@@ -2,13 +2,19 @@ import styles from './AddStudentModal.module.css'
 import {useForm} from "react-hook-form";
 import {Card} from "../../components/Card/Card";
 import {InputWrapper} from "../../components/Input/InputWrapper";
+import {addStudentToGroup} from "../../api/api";
 // import {useNavigate} from "react-router-dom";
 
 export const AddStudentModal = ({ close, groupId }) => {
 
 	// const navigate = useNavigate()
 	const {register, handleSubmit, formState: {errors}} = useForm()
-	const onSubmit = data => console.log(data)
+	const onSubmit = data => {
+		let dto = {
+			PersonDto: data
+		}
+		addStudentToGroup(groupId, dto)
+	}
 
 	return (
 		<>

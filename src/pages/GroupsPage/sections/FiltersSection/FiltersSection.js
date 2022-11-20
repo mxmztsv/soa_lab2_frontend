@@ -7,7 +7,7 @@ import {useEffect} from "react";
 
 export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage }) => {
 
-	const { register, handleSubmit, formState: { errors } } = useForm()
+	const { register, handleSubmit, formState: { errors }, reset } = useForm()
 
 	const onSubmit = async (data) => {
 		data.page = page
@@ -43,14 +43,14 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 									{...register('name')}
 								/>
 							</InputWrapper>
-							<InputWrapper title="Дата создания">
-								<input
-									type="date"
-									className={styles.input}
-									placeholder="Дата создания"
-									{...register('creation_date')}
-								/>
-							</InputWrapper>
+							{/*<InputWrapper title="Дата создания">*/}
+							{/*	<input*/}
+							{/*		type="date"*/}
+							{/*		className={styles.input}*/}
+							{/*		placeholder="Дата создания"*/}
+							{/*		{...register('creation_date')}*/}
+							{/*	/>*/}
+							{/*</InputWrapper>*/}
 							<InputWrapper title="Координата X">
 								<input
 									type="text"
@@ -101,28 +101,20 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 									</option>
 								</select>
 							</InputWrapper>
-							<InputWrapper title="Админ группы">
-								<input
-									type="text"
-									className={styles.input}
-									placeholder="Имя админа"
-									{...register('group_admin_name')}
-								/>
-							</InputWrapper>
+							{/*<InputWrapper title="Админ группы">*/}
+							{/*	<input*/}
+							{/*		type="text"*/}
+							{/*		className={styles.input}*/}
+							{/*		placeholder="Имя админа"*/}
+							{/*		{...register('admin_name')}*/}
+							{/*	/>*/}
+							{/*</InputWrapper>*/}
 							<InputWrapper title="Количество студентов">
 								<input
 									type="text"
 									className={styles.input}
 									placeholder="Количество студентов"
-									{...register('studentsCount')}
-								/>
-							</InputWrapper>
-							<InputWrapper title="> переведенных">
-								<input
-									type="text"
-									className={styles.input}
-									placeholder="Минимум переведенных студентов"
-									{...register('transferredStudents')}
+									{...register('students_count')}
 								/>
 							</InputWrapper>
 						</div>
@@ -135,29 +127,26 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 									<option value="name">
 										Названию группы
 									</option>
-									<option value="creation_date">
+									<option value="creationDate">
 										Дате создания
 									</option>
-									<option value="coordinates_x">
+									<option value="coordinateX">
 										Координате X
 									</option>
-									<option value="coordinates_y">
+									<option value="coordinateY">
 										Координате Y
 									</option>
-									<option value="students_count">
+									<option value="studentsCount">
 										Кол-ву студентов
 									</option>
-									<option value="should_be_expelled">
+									<option value="shouldBeExpelled">
 										Кол-ву студентов к отчислению
 									</option>
-									<option value="transferred_students">
+									<option value="transferredStudents">
 										Кол-ву переведенных студентов
 									</option>
-									<option value="semester">
+									<option value="semesterEnum">
 										Семестру
-									</option>
-									<option value="group_admin_name">
-										Имени админа
 									</option>
 								</select>
 							</InputWrapper>
@@ -173,7 +162,7 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 							</InputWrapper>
 							<div className={styles.btnRow}>
 								<button className="btn_filled" type="button" onClick={filter}>Применить</button>
-								<button className="btn_outlined" type="reset">Очистить</button>
+								<button className="btn_outlined" type="reset" onClick={() => {reset()}}>Очистить</button>
 							</div>
 						</div>
 					</div>
