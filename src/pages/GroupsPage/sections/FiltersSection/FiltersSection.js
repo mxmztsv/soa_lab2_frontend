@@ -101,14 +101,14 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 									</option>
 								</select>
 							</InputWrapper>
-							{/*<InputWrapper title="Админ группы">*/}
-							{/*	<input*/}
-							{/*		type="text"*/}
-							{/*		className={styles.input}*/}
-							{/*		placeholder="Имя админа"*/}
-							{/*		{...register('admin_name')}*/}
-							{/*	/>*/}
-							{/*</InputWrapper>*/}
+							<InputWrapper title="Админ группы">
+								<input
+									type="text"
+									className={styles.input}
+									placeholder="Имя админа"
+									{...register('admin_name')}
+								/>
+							</InputWrapper>
 							<InputWrapper title="Количество студентов">
 								<input
 									type="text"
@@ -148,6 +148,9 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 									<option value="semesterEnum">
 										Семестру
 									</option>
+									<option value="adminName">
+										Имени админа
+									</option>
 								</select>
 							</InputWrapper>
 							<InputWrapper title="Порядок сортировки">
@@ -162,7 +165,10 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 							</InputWrapper>
 							<div className={styles.btnRow}>
 								<button className="btn_filled" type="button" onClick={filter}>Применить</button>
-								<button className="btn_outlined" type="reset" onClick={() => {reset()}}>Очистить</button>
+								<button className="btn_outlined" type="reset" onClick={() => {
+									reset()
+									filter()
+								}}>Очистить</button>
 							</div>
 						</div>
 					</div>

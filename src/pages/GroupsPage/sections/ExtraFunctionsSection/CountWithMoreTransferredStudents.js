@@ -26,7 +26,7 @@ export const CountWithMoreTransferredStudents = ({ setResultGroups = () => {} })
 	return (
 		<div className={styles.filterContainer}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-				<InputWrapper title="Кол-во объектов, значение поля transferredStudents которых больше">
+				<InputWrapper title="Кол-во объектов, transferredStudents которых больше">
 					<input
 						type="text"
 						className={styles.input}

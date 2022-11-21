@@ -6,7 +6,8 @@ import {Pagination} from "../../../../components/Pagination/Pagination";
 import {useState} from "react";
 import {EditModal} from "../../../EditGroupModal/EditModal";
 
-export const TableSection = ({groups, nextPage, prevPage, page, limit, setLimit, updateGroups}) => {
+export const TableSection = ({groups, nextPage, prevPage, page, limit, setLimit, updateGroups = () => {
+	console.log('test')}}) => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [selectedObjectId, setSelectedObjectId] = useState(null)

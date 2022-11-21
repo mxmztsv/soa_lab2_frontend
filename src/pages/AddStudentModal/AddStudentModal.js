@@ -5,7 +5,7 @@ import {InputWrapper} from "../../components/Input/InputWrapper";
 import {addStudentToGroup} from "../../api/api";
 // import {useNavigate} from "react-router-dom";
 
-export const AddStudentModal = ({ close, groupId }) => {
+export const AddStudentModal = ({ close, groupId, updateGroup = () => {} }) => {
 
 	// const navigate = useNavigate()
 	const {register, handleSubmit, formState: {errors}} = useForm()
@@ -13,7 +13,13 @@ export const AddStudentModal = ({ close, groupId }) => {
 		let dto = {
 			PersonDto: data
 		}
-		addStudentToGroup(groupId, dto)
+		addStudentToGroup(groupId, dto).then(() => {
+			setTimeout(() => {
+				updateGroup()
+				close()
+			}, 1000)
+		})
+
 	}
 
 	return (

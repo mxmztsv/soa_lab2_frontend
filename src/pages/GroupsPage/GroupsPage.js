@@ -11,7 +11,7 @@ export const GroupsPage = () => {
 	const [groups, setGroups] = useState([])
 	const [studentsAmount, setStudentsAmount] = useState(0)
 	const [pageNum, setPageNum] = useState(1)
-	const [pageLimit, setPageLimit] = useState(1)
+	const [pageLimit, setPageLimit] = useState(5)
 	const [shouldUpdate, setShouldUpdate] = useState(false)
 
 	const update = () => {

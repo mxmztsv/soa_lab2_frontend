@@ -6,11 +6,11 @@ export const getStudyGroups = async (data) => {
 
 	console.log(data)
 
-	let url = `/study-groups?page=${data.page}&limit=${data.limit}&sort_by=${data.sort_by}&order=${data.order}`
+	let url = `/study-groups?page=${data.page}&limit=${data.limit}`
 
 	for (let key in data) {
 		if (data[key] !== "") {
-			if (key !== 'sort_by' && key !== 'order' && key !== 'page' && key !== 'limit') {
+			if (key !== 'page' && key !== 'limit') {
 				url = url + `&${key}=${data[key]}`
 			}
 		}
@@ -90,7 +90,7 @@ export const addGroup = async (data) => {
 
 }
 
-export const saveGroup = (id, data) => {
+export const saveGroup = async (id, data) => {
 	console.log(toXML(data))
 	request(`/study-groups/${id}`, 'PATCH', data).then((response) => {
 		toast.success(`Группа ${response.StudyGroupDTO.name._text} обновлена`)
@@ -109,7 +109,7 @@ export const deleteGroup = async (id) => {
 	})
 }
 
-export const addStudentToGroup = (id, data) => {
+export const addStudentToGroup = async (id, data) => {
 	console.log('new student', toXML(data))
 	request(`/group/${id}/add-student`, 'POST', data, true).then((response) => {
 		toast.success(`Студент ${response.PersonDTO.name._text} добавлен`)

@@ -35,20 +35,11 @@ export const request = async (url, method = 'GET', body = null, isu = false) => 
 				json = parseXML(editedResponseString)
 			}
 			return json
-			// responseString = responseString.split("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-			// console.log('responseString', responseString)
-			// console.log('responseString', responseString[1])
-			// const editedResponseString = `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response>${responseString[1]}</Response>`
-			// console.log('editedResponseString', editedResponseString)
-			// return parseXML(editedResponseString)
-			// return parseXML(responseString)
-			// return await new window.DOMParser().parseFromString(responseString, "text/xml")
 		} else {
-			const responseJson = await response.json()
-			console.log('status', response.status)
-			// console.log('request responseJson', responseJson)
-			// throw new Error(await responseJson.description)
-			throw new Error('Что-то пошло не так...')
+			const responseString = await response.text()
+			const responseJson = parseXML(responseString)
+			console.error(responseJson.Error.message._text)
+			throw new Error(responseJson.Error.message._text)
 		}
 	} catch (e) {
 		throw e

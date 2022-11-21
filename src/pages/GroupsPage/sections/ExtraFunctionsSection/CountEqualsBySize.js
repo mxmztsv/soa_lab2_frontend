@@ -25,7 +25,7 @@ export const CountEqualsBySize = ({ setResultGroups = () => {
 	return (
 		<div className={styles.filterContainer}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-				<InputWrapper title="Кол-во объектов, значение поля studentsCount которых =">
+				<InputWrapper title="Кол-во объектов, studentsCount которых =">
 					<input
 						type="text"
 						className={styles.input}

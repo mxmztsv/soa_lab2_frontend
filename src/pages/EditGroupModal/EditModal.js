@@ -17,10 +17,12 @@ import {
 import {toXML} from "../../utils/xmlParser";
 import {AddStudentModal} from "../AddStudentModal/AddStudentModal";
 
-export const EditModal = ({ close, id = null, updateGroups }) => {
+export const EditModal = ({ close, id = null, updateGroups = () => {
+	console.log('testtest')} }) => {
 
 	const [students, setStudents] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [shouldUpdate, setShouldUpdate] = useState(false)
 
 	const openModal = () => {
 		setIsModalOpen(true)
@@ -32,14 +34,23 @@ export const EditModal = ({ close, id = null, updateGroups }) => {
 
 	const deleteHandler = () => {
 		deleteGroup(id).then(() => {
-			updateGroups()
-			close()
+			setTimeout(() => {
+				updateGroups()
+				close()
+			}, 1000)
 		})
+	}
+
+	const update = () => {
+		setShouldUpdate(prevState => !prevState)
 	}
 
 	const expelAllHandler = () => {
 		expelAllStudentsFromGroup(id).then(() => {
-			getData()
+			setTimeout(() => {
+				updateGroups()
+				getData()
+			}, 1000)
 		})
 	}
 
@@ -59,18 +70,21 @@ export const EditModal = ({ close, id = null, updateGroups }) => {
 		delete dto.StudyGroupDTO.y
 		if (id) {
 			saveGroup(id, dto).then(() => {
-				updateGroups()
-				close()
+				setTimeout(() => {
+					updateGroups()
+				}, 1000)
 			})
 		} else {
 			addGroup(dto).then(() => {
-				updateGroups()
-				close()
+				setTimeout(() => {
+					updateGroups()
+				}, 1000)
 			})
 		}
 	}
 
 	const getData = async () => {
+		console.log("fetching group data")
 		if (id) {
 			getStudentsByGroupId(id).then((studs) => {
 				setStudents(studs)
@@ -98,11 +112,11 @@ export const EditModal = ({ close, id = null, updateGroups }) => {
 
 	useEffect(() => {
 		getData()
-	}, [])
+	}, [shouldUpdate])
 
 	return (
 		<>
-			{ isModalOpen && <AddStudentModal close={closeModal} groupId={id}/> }
+			{ isModalOpen && <AddStudentModal close={closeModal} groupId={id} updateGroup={update}/> }
 			<div className={styles.bg} onClick={close}/>
 			<div className={styles.modal}>
 				{/*<h1 className="title">Редактор группы</h1>*/}
