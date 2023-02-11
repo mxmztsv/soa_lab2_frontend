@@ -1,13 +1,16 @@
 import styles from './FiltersSection.module.css'
 import {InputWrapper} from "../../../../components/Input/InputWrapper";
 import {Card} from "../../../../components/Card/Card";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {getStudyGroups} from "../../../../api/api";
 import {useEffect} from "react";
 
-export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage }) => {
+export const FiltersSection = ({
+	                               setGroups = () => {
+	                               }, page, limit, setFirstPage
+                               }) => {
 
-	const { register, handleSubmit, formState: { errors }, reset } = useForm()
+	const {register, handleSubmit, reset} = useForm({defaultValues: {sort_by: "id", order: "ASC"}})
 
 	const onSubmit = async (data) => {
 		data.page = page
@@ -168,7 +171,8 @@ export const FiltersSection = ({ setGroups = () => {}, page, limit, setFirstPage
 								<button className="btn_outlined" type="reset" onClick={() => {
 									reset()
 									filter()
-								}}>Очистить</button>
+								}}>Очистить
+								</button>
 							</div>
 						</div>
 					</div>

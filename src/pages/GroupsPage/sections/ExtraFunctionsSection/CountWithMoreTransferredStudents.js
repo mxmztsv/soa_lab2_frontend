@@ -4,22 +4,22 @@ import {InputWrapper} from "../../../../components/Input/InputWrapper";
 import {useState} from "react";
 import {countEqualsBySize, countMoreTransferredStudents} from "../../../../api/api";
 
-export const CountWithMoreTransferredStudents = ({ setResultGroups = () => {} }) => {
+export const CountWithMoreTransferredStudents = ({ setResultGroups = () => {}, updateGroups = () => {} }) => {
 
 	const [count, setCount] = useState(0)
 
-	const { register, handleSubmit, formState: { errors }, reset } = useForm()
+	const { register, handleSubmit, reset } = useForm()
 
 	const onSubmit = async (data) => {
 		const response = await countMoreTransferredStudents(data.transferredStudents)
-		setCount(response.Count._text)
-		console.log('response.ListOfStudyGroups', response.ListOfStudyGroups)
-		if (response.ListOfStudyGroups.StudyGroupDTO === undefined) {
+		setCount(response.count._text)
+		// console.log('response.ListOfStudyGroups', response.ListOfStudyGroups)
+		if (response.listStudyGroup.StudyGroupResponseDTO === undefined) {
 			setResultGroups([])
-		} else if (response.ListOfStudyGroups.StudyGroupDTO.length === undefined) {
-			setResultGroups([response.ListOfStudyGroups.StudyGroupDTO])
+		} else if (response.listStudyGroup.StudyGroupResponseDTO.length === undefined) {
+			setResultGroups([response.listStudyGroup.StudyGroupResponseDTO])
 		} else {
-			setResultGroups(response.ListOfStudyGroups.StudyGroupDTO)
+			setResultGroups(response.listStudyGroup.StudyGroupResponseDTO)
 		}
 	}
 
@@ -40,6 +40,7 @@ export const CountWithMoreTransferredStudents = ({ setResultGroups = () => {} })
 					<button className="btn_outlined" type="reset" onClick={() => {
 						reset()
 						setCount(0)
+						updateGroups()
 					}}>Очистить</button>
 				</div>
 			</form>

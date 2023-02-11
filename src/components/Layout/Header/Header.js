@@ -9,7 +9,7 @@ export const Header = ({
         <header className={styles.header} style={{ backgroundColor }}>
             <Container>
                 <div className={styles.headerInnerContainer}>
-                    <p className={styles.logo}><span className="yellow">LAB2</span>SOA</p>
+                    <p className={styles.logo}><span className="yellow">LAB3</span>SOA</p>
                     <p className={styles.name}>Максим Зайцев <span className="yellow">P34101</span></p>
                 </div>
             </Container>

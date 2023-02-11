@@ -26,6 +26,7 @@ export const request = async (url, method = 'GET', body = null, isu = false) => 
 
 		if (response.ok) {
 			let responseString = await response.text()
+			console.log('request response', responseString)
 			let json
 			try {
 				json = parseXML(responseString)
@@ -34,12 +35,13 @@ export const request = async (url, method = 'GET', body = null, isu = false) => 
 				const editedResponseString = `<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response>${responseString[1]}</Response>`
 				json = parseXML(editedResponseString)
 			}
+			console.log('json response', json)
 			return json
 		} else {
 			const responseString = await response.text()
 			const responseJson = parseXML(responseString)
-			console.error(responseJson.Error.message._text)
-			throw new Error(responseJson.Error.message._text)
+			console.error(responseJson.Map.error._text)
+			throw new Error(responseJson.Map.error._text)
 		}
 	} catch (e) {
 		throw e

@@ -87,6 +87,7 @@ export const EditModal = ({ close, id = null, updateGroups = () => {
 		console.log("fetching group data")
 		if (id) {
 			getStudentsByGroupId(id).then((studs) => {
+				console.log('studs', studs)
 				setStudents(studs)
 			}).then(() => {
 				getStudyGroupById(id).then((groupData) => {
@@ -103,11 +104,12 @@ export const EditModal = ({ close, id = null, updateGroups = () => {
 					}
 				})
 			})
-		} else {
-			getStudentsByGroupId(id).then((studs) => {
-				setStudents(studs)
-			})
 		}
+		// } else {
+		// 	getStudentsByGroupId(id).then((studs) => {
+		// 		setStudents(studs)
+		// 	})
+		// }
 	}
 
 	useEffect(() => {

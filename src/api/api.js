@@ -20,69 +20,37 @@ export const getStudyGroups = async (data) => {
 
 	const response = await request(url)
 
-	if (response.ListOfStudyGroups.StudyGroupDTO === undefined) {
+	if (response.ListStudyGroupResponseDTO.ListOfStudyGroups.StudyGroupDTO === undefined) {
 		return []
-	} else if (response.ListOfStudyGroups.StudyGroupDTO.length !== undefined) {
-		return response.ListOfStudyGroups.StudyGroupDTO
+	} else if (response.ListStudyGroupResponseDTO.ListOfStudyGroups.StudyGroupDTO.length !== undefined) {
+		return response.ListStudyGroupResponseDTO.ListOfStudyGroups.StudyGroupDTO
 	} else {
-		return [response.ListOfStudyGroups.StudyGroupDTO]
+		return [response.ListStudyGroupResponseDTO.ListOfStudyGroups.StudyGroupDTO]
 	}
 }
 
 export const getStudyGroupById = async (id) => {
 	const response = await request(`/study-groups/${id}`)
-	return response.StudyGroupDTO
+	return response.StudyGroupResponseDTO
 }
 
 export const getStudentsByGroupId = async (id) => {
 
-	const responseXML = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-\t<PersonDto>
-\t\t\t<name>Зайцев Максим</name>
-\t\t\t<height>185</height>
-\t\t\t<weight>92</weight>
-\t\t\t<passportID>1234 123456</passportID>
-\t\t\t<nationality>RUSSIA</nationality>
-\t</PersonDto>
-\t<PersonDto>
-\t\t\t<name>Ильинская Ольга</name>
-\t\t\t<height>185</height>
-\t\t\t<weight>92</weight>
-\t\t\t<passportID>1234 654321</passportID>
-\t\t\t<nationality>RUSSIA</nationality>
-\t</PersonDto>
-\t<PersonDto>
-\t\t\t<name>Чупанов Али</name>
-\t\t\t<height>185</height>
-\t\t\t<weight>92</weight>
-\t\t\t<passportID>1234 123654</passportID>
-\t\t\t<nationality>RUSSIA</nationality>
-\t</PersonDto>
-</Response>`
+	const response = await request(`/study-groups/${id}/students`, "GET")
 
-	// const responseJSON = parseXML(responseXML)
-	// console.log(responseJSON.Response.PersonDto)
-
-	const response = await request(`/group/${id}/students`, "GET", null, true)
-
-	console.log('students by group id', response.ListOfPersons)
-
-	// return response.ListOfPersons.PersonDTO
-
-	if (response.ListOfPersons.PersonDTO === undefined) {
+	if (response.ListPersonResponseDTO.ListOfPersons.PersonDTO === undefined) {
 		return []
-	} else if (response.ListOfPersons.PersonDTO.length !== undefined) {
-		return response.ListOfPersons.PersonDTO
+	} else if (response.ListPersonResponseDTO.ListOfPersons.PersonDTO.length !== undefined) {
+		return response.ListPersonResponseDTO.ListOfPersons.PersonDTO
 	} else {
-		return [response.ListOfPersons.PersonDTO]
+		return [response.ListPersonResponseDTO.ListOfPersons.PersonDTO]
 	}
 }
 
 export const addGroup = async (data) => {
 	console.log(toXML(data))
 	request('/study-groups', 'POST', data).then((response) => {
-		toast.success(`Группа ${response.StudyGroupDTO.name._text} добавлена`)
+		toast.success(`Группа ${response.StudyGroupResponseDTO.name._text} добавлена`)
 		return response
 	}).catch((e) => {
 		toast.error(e.message)
@@ -93,7 +61,7 @@ export const addGroup = async (data) => {
 export const saveGroup = async (id, data) => {
 	console.log(toXML(data))
 	request(`/study-groups/${id}`, 'PATCH', data).then((response) => {
-		toast.success(`Группа ${response.StudyGroupDTO.name._text} обновлена`)
+		toast.success(`Группа ${response.StudyGroupResponseDTO.name._text} обновлена`)
 		return response
 	}).catch((e) => {
 		toast.error(e.message)
@@ -112,13 +80,13 @@ export const deleteGroup = async (id) => {
 export const addStudentToGroup = async (id, data) => {
 	console.log('new student', toXML(data))
 	request(`/group/${id}/add-student`, 'POST', data, true).then((response) => {
-		toast.success(`Студент ${response.PersonDTO.name._text} добавлен`)
+		toast.success(`Студент ${response.PersonResponseDTO.name._text} добавлен`)
 	}).catch((e) => {
 		toast.error(e.message)
 	})
 }
 
-export const expelAllStudentsFromGroup = (id) => {
+export const expelAllStudentsFromGroup = async (id) => {
 	request(`/group/${id}/expel-all`, 'POST', null, true).then((response) => {
 		toast.success(`Все студенты группы отчислены`)
 	}).catch((e) => {
@@ -128,22 +96,23 @@ export const expelAllStudentsFromGroup = (id) => {
 
 export const getStudentsAmount = async () => {
 	const response = await request('/study-groups/students/amount')
-	return response.sumStudentCount._text
+	return response.SumStudentCountDTO.sum._text
 }
 
 export const countEqualsBySize = async (studentsAmount) => {
 	const response = await request(`/study-groups/count-equals-by-size/${studentsAmount}`)
-	return response.Response
+	return response.CountStudyGroupDTO
 }
 
 export const countMoreTransferredStudents = async (transferredStudents) => {
 	const response = await request(`/study-groups/count-with-more-transferred-students-than/${transferredStudents}`)
 	console.log('countMoreTransferredStudents', response)
-	if (response.Response === undefined) {
-		return response
-	} else {
-		return response.Response
-	}
+	// if (response.Response === undefined) {
+	// 	return response
+	// } else {
+	// 	return response.CountStudyGroupDTO
+	// }
+	return response.CountStudyGroupDTO
 }
 
 

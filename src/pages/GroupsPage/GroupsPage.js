@@ -20,7 +20,7 @@ export const GroupsPage = () => {
 	}
 
 	const fetchGroups = async () => {
-		const response = await getStudyGroups({page: pageNum, limit: pageLimit})
+		const response = await getStudyGroups({page: pageNum, limit: pageLimit, sort_by: "id", order: "ASC"})
 		setGroups(response)
 	}
 
@@ -55,7 +55,7 @@ export const GroupsPage = () => {
 				<h1 className="title">Учебные группы</h1>
 				<p className={styles.studentsAmount}>Всего студентов: {studentsAmount}</p>
 				<FiltersSection setGroups={setGroups} page={pageNum} limit={pageLimit} setFirstPage={setFirstPage}/>
-				<ExtraFunctionsSection setGroups={setGroups} />
+				<ExtraFunctionsSection setGroups={setGroups} updateGroups={update} />
 				<TableSection groups={groups} nextPage={nextPageHandler} prevPage={prevPageHandler} limit={pageLimit}
 				              page={pageNum}
 				              setLimit={setPageLimit}
